@@ -276,5 +276,15 @@ after_test:
     C:\MinGW\msys\1.0\bin\bash -e -l -c "cd libewf-legacy && chmod a+x ./codecov.sh && sed -i 's/-execdir /-exec /' ./codecov.sh && ./codecov.sh -n ${TARGET} -y .codecov.yml" )
 
 artifacts:
-- path: dist\*.whl
+- path: \*.nupkg
 
+deploy:
+- provider: NuGet
+  skip_symbols: true
+  api_key:
+    secure: gCkz3PNGORdxJGl+aegOa7OJ4IQFHC/FqgCzbirMk7nyNFCuZzc1/ne2174eYxsw
+  artifact: /.*\.nupkg/
+  on:
+    branch: master
+    appveyor_repo_tag: true
+    target: vs2017
